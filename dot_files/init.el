@@ -33,6 +33,8 @@
     company-rtags
     flycheck-rtags
     flycheck-popup-tip
+    elpy
+    ;;company-jedi
     ;;irony
     ;;flycheck-irony
     ;;company-irony
@@ -333,6 +335,7 @@ This function also returns nil meaning don't specify the indentation."
   (global-company-mode 1)
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 3)
+  (setq company-selection-wrap-around t)
   (global-set-key (kbd "C-M-i") 'company-complete)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
@@ -347,7 +350,7 @@ This function also returns nil meaning don't specify the indentation."
             (lambda ()
               (when (rtags-is-indexed)
                 (local-set-key (kbd "M-.") 'rtags-find-symbol-at-point)
-                (local-set-key (kbd "M-;") 'rtags-find-symbol)
+                ;; (local-set-key (kbd "M-;") 'rtags-find-symbol)
                 (local-set-key (kbd "M-@") 'rtags-find-references)
                 (local-set-key (kbd "M-,") 'rtags-location-stack-back)))))
 
@@ -420,3 +423,12 @@ This function also returns nil meaning don't specify the indentation."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; autocompletion for python
+;; (when (require 'jedi-core nil 'noerror)
+;;   (add-hook 'python-mode-hook 'jedi:setup)
+;;   (add-to-list 'company-backends 'company-jedi)
+;;   (setq jedi-complete-on-dot t)
+;;   )
+(elpy-enable)
+(setq elpy-rpc-python-command "python3")
